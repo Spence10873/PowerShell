@@ -21,7 +21,7 @@ $ReportDate = (get-date -f s).replace(":","-")
 $Cases = Get-ComplianceCase
 Write-Host "There are currently $($Cases.count) compliance cases in Office 365"
 
-$ActiveCases = $Cases | Where{$_.Status -eq "Active"}
+$ActiveCases = $Cases | Where-Object{$_.Status -eq "Active"}
 Write-Host "Of those $($Cases.count) cases, $($ActiveCases.count) are active"
 
 Write-Host "Building table to include in report"
@@ -34,7 +34,6 @@ Foreach($ActiveCase in $ActiveCases)
     $i++
     Write-Progress -Activity "Building a table of each active case, including CaseName, CreatedDateTime, LastModifiedDateTime, Status, ExchangeLocation, and SharePointLocation" -Status "Working on $($ActiveCase.Name), ($i / $ActiveCasesCount)" -PercentComplete (($i / $ActiveCasesCount) * 100)
     $ActiveCaseHoldPolicy = $null
-    $ActiveCaseWorkLoad = $null
     $ExchangeLocation = $null
     $SharePointLocation = $null
     $ActiveCaseHoldPolicy = Get-CaseHoldPolicy $ActiveCase.name
