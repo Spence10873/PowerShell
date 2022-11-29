@@ -1,22 +1,4 @@
 ﻿
-<#
-Import-Module C:\Scripts\Functions\Write-Log.ps1
-
-[string]$LogFileDate = (get-date -f s).replace(":","-")
-$LogFileName = "C:\Scripts\ScheduledTasks\O365ComplianceCases\Logs\O365ComplianceCaseReport_$LogFileDate.log"
-
-Write-Log "Creating credential object for O365ExchangeAdmin"
-$O365ExchangeAdminPW = "01000000d08c9ddf0115d1118c7a00c04fc297eb01000000dc85d1ab3700a54ab118e8d87c19c30e0000000002000000000003660000c000000010000000ac89cecb21607793c5f50e21898c57830000000004800000a0000000100000002ef6af28259fdcf2b909726be8d35a4418000000ce8b001a8672dbdef442551fce4d48b2d5b5671dd4c475361400000038b25a7170fe1d5a2a9e913c29052b02490ec7cc"
-$O365ExchangeAdminSecure = $O365ExchangeAdminPW | convertto-secureSTring
-$creds = New-Object System.Management.Automation.PSCredential ("O365ExchangeAdmin@cerner.net", $O365ExchangeAdminSecure)
-Write-Log "Connecting to Security and Compliance Center"
-$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://nam01b.ps.compliance.protection.outlook.com/PowerShell-LiveId -Credential $Creds -Authentication Basic -AllowRedirection
-#$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.compliance.protection.outlook.com/powershell-liveid -Credential $Creds -Authentication Basic -AllowRedirection
-Import-PSSession $Session -AllowClobber -DisableNameChecking
-
-Write-Log "Getting Compliance Cases"
-
-#>
 $ReportDate = (get-date -f s).replace(":","-")
 $Cases = Get-ComplianceCase
 Write-Host "There are currently $($Cases.count) compliance cases in Office 365"
